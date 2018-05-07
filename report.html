@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安全报表</title>
+    <meta name="keywords" content="渠道通">
+    <meta name="description" content="渠道通">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+<!--     <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="css/time/bootstrap.css" rel="stylesheet">
+    <link href="css/time/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <base target="_blank">
+    <script src="myjs/html5shiv.min.js"></script>
+    <script src="myjs/respond.min.js"></script>
+    <style>
+    	td,th{text-align: center;}
+	    .split{page-break-after:always;} 
+	    h2{font-weight:bold;} 
+	    h2,h3{margin-bottom:20px;} 
+	    h1{font-weight:600;text-align:center;} 
+	    .overflows { overflow-y:auto; height:249px; } 
+	    .tableflows { overflow-y: auto; height: 215px; } 
+	    .headflows { height: 34px; } 
+	    .searchbox{ float:right; margin-top:-3px; margin-right: 5px; border:2px solid #AAAAAA; width:170px; height:25px; border-radius:30px; } 
+	    .searchinput{ border:none; outline:medium; margin-left: 9px; }
+    </style>
+  </head>
+  
+  <body class="gray-bg">
+    <div id="content" class="gray-bg">
+      <div class="wrapper wrapper-content animated fadeInRight">
+        <!--选择周报-->
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="ibox-title" style="height:70px;margin-bottom:10px;margin-right:10px;margin-left:10px;border-radius: 4px">
+              <!-- 日期选择 -->
+              <div style="float: right;">
+                <div class="ibox-tools" id="choose">
+                	<div style="width:120px;float: right;margin-right: 5px;" id="spin">
+                		<div style="margin-top: 10px;margin-left: 60px"><i class="fa fa-spinner fa-spin" ></i></div>
+                	</div>
+                	<div style="width:120px;float: right;margin-right: 5px;">
+						  <button class="btn btn-sm" style="margin-top: 3px;width:120px;display: none" type="button" id="week">生成报表</button>
+			              <button class="btn btn-sm" style="margin-top: 3px;width:120px;display: none" type="button" id="load" onclick="domShot('content')">下载报表</button>
+	                </div>
+	                <div class="form-group" style="float: right;margin-right: 20px;width:500px">
+		                <div class="input-group date form_datetime col-md-5" style="float:right;margin-right:0px" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1" data-link-format="yyyy-mm-dd">
+		                    <input class="form-control" size="16" type="text" value="" readonly id="dateString">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+		                </div>
+						<input type="hidden" id="dtp_input1" value="" /><br/>
+		            </div>
+					</div>
+               </div>
+              </div>
+          </div>
+        </div>
+        <div class='split'>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                  <span class="label label-success pull-right"></span>
+                  <h5>
+                    <a href="basicThread.html" target="_blank">[标题示例]</a></h5>
+                </div>
+                <div class="ibox-content" style="height:230px; padding-top:60px; text-align:center;">
+                  <h1 class="no-margins" style="font-size:4em;">
+                    <span id="threadcount"></span>
+                  </h1>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-8">
+              <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                  <h5>[标题示例]</h5>
+                  <div class="btn-group" style="float:right;margin-top: -6px;margin-right:2px;">
+                    <button type="button" id='countryfrom' onclick='countryArr()' class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">全部国家
+                      <span class="caret"></span></button>
+                    <ul class="dropdown-menu" id='countryarr'>
+                      <li>
+                        <a target="_self">[标题示例]</a></li>
+                      <li>
+                        <a target="_self">[标题示例]</a></li>
+                    </ul>
+                  </div>
+                  <!--<div class="ibox-tools"><a class="collapse-link">更多></a></div> --></div>
+                <div class="ibox-content">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="echarts" id="echarts-bar1-threadchart"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='split'>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                  <h5>[标题示例]</h5>
+                  <!-- <div class="ibox-tools"><a class="collapse-link">更多></a></div>--></div>
+                <div class="ibox-content">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="echarts" id="echarts-line-ddoschart"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                  <h5>[标题示例]</h5>
+                </div>
+                  <div class="ibox-content">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="echarts" id="echarts-line-sqlchart"></div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                  <h5>[标题示例]</h5>
+                  <!-- <div class="ibox-tools"><a class="collapse-link">更多></a></div>--></div>
+                <div class="ibox-content">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="echarts" id="echarts-line-scanchart"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='split'>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                  <h5>[标题示例]</h5>总数:
+                  <label id="gettotal"></label>
+                  <div class="searchbox">
+                    <input id="searchsrcip" name="searchsrcip" class="searchinput" type="text" size="16" value="请输入源IP地址..." onblur="getSearchip();if(this.value==''){this.value='请输入源IP地址...';}" onfocus="if(this.value =='请输入源IP地址...') {this.value=''; }" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d\.]/g,'') " />
+                    <div style="float:right;margin-top:0px;margin-right: 1px;">
+                      <a onclick="getSearchip()">&nbsp;
+                        <i class="fa fa-search"></i>&nbsp;</a></div>
+                  </div>
+                </div>
+                <div class="ibox-content">
+                  <div class="headflows">
+                    <table class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                      <colgroup>
+                        <col width="5%">
+                          <col width="15%">
+                            <col width="15%">
+                              <col width="50%">
+                                <col width="5%">
+                                  <col width="10%"></colgroup>
+                      <thead>
+                        <tr>
+                          <th data-toggle="true">#</th>
+                          <th>示例</th>
+                          <th>示例</th>
+                          <th style='text-align:center'>示例</th>
+                          <th>示例</th>
+                          <th>示例</th></tr>
+                      </thead>
+                    </table>
+                  </div>
+                  <div class="tableflows">
+                    <table class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                      <colgroup>
+                        <col width="5%">
+                          <col width="15%">
+                            <col width="15%">
+                              <col width="50%">
+                                <col width="5%">
+                                  <col width="10%"></colgroup>
+                      <tbody id="trojanInformation"></tbody>
+                      <tbody>
+                        <tr>
+                          <td colspan="6" align="center" id="tdTrojan">
+                            <button onclick="getTrojan()">点击加载更多</button></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='split'>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                  <h5>
+                    <a href="abnormal.html" target="_blank">[标题示例]</a></h5>
+                </div>
+                <div class="ibox-content">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="echarts" id="echarts-line-chart"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='split'>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                  <h5>[标题示例]</h5></div>
+                <div class="ibox-content">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="echarts" id="echarts-area-chart"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='split'>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                  <h5>[标题示例]</h5></div>
+                <div class="ibox-content">
+                  <div class="headflows">
+                    <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+                      <colgroup>
+                        <col width="50%">
+                          <col width="50%"></colgroup>
+                      <thead>
+                        <tr>
+                          <th>[标题示例]</th>
+                          <th>[标题示例]</th></tr>
+                      </thead>
+                    </table>
+                  </div>
+                  <div class="tableflows">
+                    <table class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                      <colgroup>
+                        <col width="50%">
+                          <col width="50%"></colgroup>
+                      <tbody id="ip"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-8">
+              <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                  <h5>敏感文件监控</h5></div>
+                <div class="ibox-content">
+                  <div class="overflows">
+                    <table class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                      <thead>
+                        <tr>
+                          <th>[标题示例]</th>
+                          <th>[标题示例]</th></tr>
+                      </thead>
+                      <tbody id="doc"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/map/jquery.min.js-v=2.1.4"></script>
+    <script src="js/map/echarts.min.js"></script>
+    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="js/time/bootstrap.js"></script>
+    <script src="js/time/bootstrap-datetimepicker.js"></script>
+    <script src="js/time/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="myjs/html2canvas1.js"></script>
+    <script src="myjs/report.js"></script>
+    <script type="text/javascript">function domShot(domId) {
+        html2canvas(document.querySelector("#" + domId), {
+          height: $("#" + domId).outerHeight() + 20,
+          onrendered: function(canvas) {
+            var url = canvas.toDataURL();
+            var timestamp = Date.parse(new Date());
+            //以下代码为下载此图片功能
+            var triggerDownload = $("<a>").attr("href", url).attr("download", timestamp + '.jpeg').appendTo("body");
+            triggerDownload[0].click();
+            triggerDownload.remove();
+          }
+        });
+//         document.getElementById("load").style.display = 'none';
+//         document.getElementById("week").style.display = 'block';
+      }</script>
+    <script type="text/javascript">var formatDateTime = function(date) {
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? ('0' + m) : m;
+        var d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        return y + '-' + m + '-' + d;
+      };
+      var currentdate = formatDateTime(new Date());
+      $('.form_datetime').datetimepicker({
+        format: "yyyy-mm-dd",
+        language: 'zh-CN',
+        weekStart: 1,
+        endDate: currentdate,
+        daysOfWeekDisabled: [1, 2, 3, 4, 5, 6],
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0,
+        // 		pickerPosition: 'bottom-left',
+      }).on('changeDate', function(ev){
+		    	$("#load").hide();
+		      	$("#spin").show();
+        	  	var date = stringToDate($("#dateString").val());
+    			dateString = $("#dateString").val()+" 23:59:59";
+    			endtime = new Date(dateString).getTime();
+    			starttime = endtime - 7*24*60*60*1000;
+    			getdatas();
+      });
+      </script>
+  </body>
+
+</html>

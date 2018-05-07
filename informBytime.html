@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查询详情</title>
+    <meta name="keywords" content="渠道通">
+    <meta name="description" content="渠道通">
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/fonts/font-awesome.min.css" rel="stylesheet">
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet"><base target="_blank">
+    <script src="myjs/html5shiv.min.js"></script>
+    <script src="myjs/respond.min.js"></script>
+    <style type="text/css">
+    	td,th{
+    		text-align: center;
+    	}
+    </style>
+</head>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+<!--                     	<button onclick="getDetailSeverity(0,'port',1517186700000,1517193900000)">点击请求</button> -->
+                        <h5>详细信息</h5>
+	                        &nbsp;&nbsp;&nbsp;总条数:<label  id="total1"></label>
+	                        &nbsp;&nbsp;&nbsp;时间范围:<label  id="time"></label>
+                    </div> 
+                    <div class="ibox-content">
+                        <table class="table table-stripped toggle-arrow-tiny " id="editable">
+                            <thead id="thead1">
+                                <tr>
+                                    <th>#</th>
+                                    <th>时间</th>
+                                    <th>源IP</th>
+                                    <th>源端口</th>
+                                    <th>目标IP</th>
+                                    <th>目标端口</th>
+                                    <th>国家</th>
+                                </tr>
+                            </thead>
+                            <tbody id="detail">
+                            </tbody>
+	                        <tbody> 
+	                         <tr>
+	                            <td colspan="7" align="center" id="tdmore"><button onclick="getdetail()">点击加载更多</button><input type="hidden" id="total" value="0"/></td>
+	                        </tr>
+	                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.min.js-v=2.1.4"></script>
+    <script src="js/bootstrap.min.js-v=3.3.5"></script>
+    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="js/content.min.js-v=1.0.0"></script>
+	<script src="myjs/date.js"></script>
+	<script src="myjs/detail/informBytime.js"></script>
+	<script src="myjs/login.js"></script>
+	<script src="myjs/common/common.js" type="text/javascript"></script>
+</body>
+</html>

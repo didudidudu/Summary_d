@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>协议监测</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/fonts/font-awesome.min.css" rel="stylesheet">
+    <link href="css/plugins/footable/footable.core.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <base target="_blank">
+    <script src="js/login/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/floatbutton/menu.css">
+    <style>.table > tbody > tr > td a { color: #999; }</style>
+    <style type="text/css">
+    .echarts {
+		height:230px
+	}
+	.overflows {
+		overflow-y:auto;
+		height:270px;
+	}
+	.tableflows {
+		overflow-y:auto;
+		height:197px;
+	}
+	.headflows {
+		height:34px;
+	}
+	.overauto {
+		height:320px;
+	}
+	.searchbox {
+		float:right;
+		margin-top:-3px;
+		margin-right:5px;
+		border:2px solid #AAAAAA;
+		width:140px;
+		height:25px;
+		border-radius:30px;
+	}
+	.searchinput {
+		border:none;
+		outline:medium;
+		margin-left:9px;
+	}
+	.wrap {
+		width:150px;
+		white-space:nowrap;
+		text-overflow:ellipsis;
+		overflow:hidden;
+		cursor:pointer;
+	}
+	th,td {
+		text-align:center;
+	}
+	</style>
+  </head>
+  
+  <body class="gray-bg">
+    <div class="row animated fadeInRight" style="position:absolute; right:120px; top:26px;z-index: 99;width: 600px;height:30px" id="floatbtn">
+      <div id="timeselect">
+        <input type="text" class="demo-input" placeholder="请选择日期" id="selecttimerange" style="text-align:center;"></div>
+      <div id="menu">
+        <ul>
+          <li class="cur" onclick="selectProtype(0)">***</li>
+          <li onclick="selectProtype(1)">****</li>
+          <li onclick="selectProtype(2)">****</li>
+          <li onclick="selectProtype(3)">***</li>
+          <li onclick="selectProtype(4)">***</li></ul>
+      </div>
+    </div>
+    <div class="wrapper wrapper-content animated fadeInRight">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>[标题示例]</h5>&nbsp;&nbsp;总数:
+              <span id="protocoltotal"></span>
+              <!--<div class="ibox-tools"><a class="collapse-link">更多></a></div> -->
+              <div class="btn-group" style="float: right;margin-top: -6px;margin-right: -3px;">
+                <button type="button" id="timecontrol" onclick="intervalstr()" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">15分钟
+                  <span class="caret"></span></button>
+                <ul id="intervalStr" class="dropdown-menu">
+                  <li>
+                    <a onclick="" target="_self">5分钟</a></li>
+                  <li>
+                    <a onclick="" target="_self">15分钟</a></li>
+                  <li>
+                    <a onclick="" target="_self">30分钟</a></li>
+                  <li>
+                    <a onclick="" target="_self">60分钟</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="ibox-content">
+              <div class="row-in">
+                <div class="col-sm-12">
+                  <div class="echarts" id="echarts-protocol-chart"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>[标题示例]</h5></div>
+            <div class="ibox-content">
+              <div class="headflows">
+                <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+                  <colgroup>
+                    <col width="48%"></colgroup>
+                  <thead>
+                    <tr>
+                      <th data-toggle="true">示例</th>
+                      <th>数量</th></tr>
+                  </thead>
+                </table>
+              </div>
+              <div class="tableflows">
+                <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+                  <colgroup>
+                    <col width="50%"></colgroup>
+                  <tbody id="byprotocol"></tbody>
+                </table>
+                <div style="right: 30px;position: absolute;top: 240px;display: block" id=pagesearch>
+                  <ul id='page-s'></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='col-sm-8'>
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>源IP：</h5>
+              <label id="srcip"></label>
+            </div>
+            <div class="ibox-content">
+              <div class="row-in">
+                <div class="col-sm-12">
+                  <div class="echarts" id="echarts-protocolTime-chart"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>[标题示例]</h5></div>
+            <div class="ibox-content">
+              <div class="headflows">
+                <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+                  <colgroup>
+                    <col width="40%">
+                      <col width="30%">
+                        <col width="30%"></colgroup>
+                  <thead>
+                    <tr>
+                      <th data-toggle="true">示例</th>
+                      <th>示例</th>
+                      <th>数量</th></tr>
+                  </thead>
+                </table>
+              </div>
+              <div class="tableflows">
+                <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+                  <colgroup>
+                    <col width="40%">
+                      <col width="30%">
+                        <col width="30%"></colgroup>
+                  <tbody id="bysrcip"></tbody>
+                </table>
+                <div style="right: 30px;position: absolute;top: 240px;display: block" id=pagefori>
+                  <ul id='page-f'></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='col-sm-8'>
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>目标IP：</h5>
+              <label id="dstip"></label>
+            </div>
+            <div class="ibox-content">
+              <div class="row-in">
+                <div class="col-sm-12">
+                  <div class="echarts" id="echarts-protocolOutTime-chart"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 已修改 -->
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>[标题示例]</h5>&nbsp;&nbsp;&nbsp;&nbsp;协议总数:
+              <span id="newchxtotal1"></span>
+              <!-- <div class="searchbtn"> -->
+              <div style="float:right;margin-top:0px;margin-right: 1px;">
+                <a onclick="newchxbut(from,ipsrc,ipdst,protocoltype,starttime,endtime)">&nbsp;
+                  <i class="fa fa-search"></i>&nbsp;</a></div>
+              <!-- </div> -->
+              <div class="searchbox">
+                <input id="searchdstip" name="searchdstip" class="searchinput" type="text" size="14" value="请输入目标IP地址..." onblur="if(this.value==''){this.value='请输入目标IP地址...';}" onfocus="if(this.value =='请输入目标IP地址...') {this.value=''; }" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d\.]/g,'') " /></div>
+              <div class="searchbox">
+                <input id="searchsrcip" name="searchsrcip" class="searchinput" type="text" size="14" value="请输入源IP地址..." onblur="if(this.value==''){this.value='请输入源IP地址...';}" onfocus="if(this.value =='请输入源IP地址...') {this.value=''; }" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d\.]/g,'') " /></div>
+            </div>
+            <div class="ibox-content">
+              <div class="overflows">
+                <table style="table-layout:fixed;" class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                  <thead>
+                    <tr>
+                      <th width="6%">#</th>
+                      <th width="13%">示例</th>
+                      <th width="13%">示例</th>
+                      <th width="8%">示例</th>
+                      <th width="8%">示例</th>
+                      <th>示例</th>
+                      <th width="8%">示例</th></tr>
+                  </thead>
+                  <tbody id="newchxdetail"></tbody>
+                </table>
+                <div style="right: 30px;position: absolute;top: 285px;display:block" id="search">
+                  <ul id='page-search'></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/map/jquery.min.js-v=2.1.4"></script>
+    <script src="js/map/echarts.min.js"></script>
+    <script src="js/bootstrap.min.js-v=3.3.5"></script>
+    <script src="js/content.min.js-v=1.0.0"></script>
+    <script src="js/page/bootstrap-paginator.js"></script>
+    <script src="myjs/protocolDetection.js"></script>
+    <script src="myjs/login.js"></script>
+    <script src="myjs/common/common.js"></script>
+    <script src="laydate/laydate.js"></script>
+    <script>
+    	var formatDateTime = function(date) {
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        // 	    m = m < 10 ? ('0' + m) : m;  
+        var d = date.getDate();
+        // 	    d = d < 10 ? ('0' + d) : d;  
+        var h = date.getHours();
+        var minute = date.getMinutes();
+        var s = date.getSeconds();
+        // 	    minute = minute < 10 ? ('0' + minute) : minute;  
+        return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + s;
+      };
+      var enddate = formatDateTime(new Date());
+      var startdate = formatDateTime(new Date(new Date().getTime() - 86400000));
+      // 	alert(startdate+'/'+enddate);
+      //执行一个laydate实例
+      laydate.render({
+        elem: '#selecttimerange',
+        type: 'datetime',
+        range: '至',
+        format: 'yyyy-M-d H:m:s',
+        min: -1,
+        max: 0,
+        value: startdate + ' 至 ' + enddate,
+        done: function(value, date, endDate) {
+          if (value != '') {
+            for (var i = 0; i < value.length; i++) {
+              if (value[i] == '至') {
+                start = value.substring(0, i);
+                end = value.slice(i + 1);
+                starttime = (new Date(start)).getTime(); //得到毫秒数
+                endtime = (new Date(end)).getTime();
+                break;
+              }
+            }
+          } else {
+            endtime = new Date().getTime();
+            starttime = endtime - 86400000;
+          }
+          getdatas();
+        }
+      });
+      //点击更换悬浮框效果类
+          $("#menu li").click(function() {
+	        $(this).siblings('li').removeClass('cur'); // 删除其他兄弟元素的样式
+	        $(this).addClass('cur'); // 添加当前元素的样式
+        	});
+          $("#floatbtn").on({  
+            	  mouseover : function(){  
+                	  $("#menu").css({'opacity': 1}); 
+                	  $("#timeselect").css({'opacity': 1});
+                  } ,  
+                  mouseout : function(){  
+                	  if ($('#floatbtn').position().top == 0){
+                		  $("#menu").css({'opacity': 0.6}); 
+                		  $("#timeselect").css({'opacity': 0.6});
+                	  } else {
+                		  $("#menu").css({'opacity': 1}); 
+                		  $("#timeselect").css({'opacity': 1});
+                	  }
+                  }   
+          }) ;  
+        //鼠标滚动改变效果类
+          $(window).scroll(function() {
+            if ($(document).scrollTop() >= 32) {
+              x = 0.6;
+              y = 'fixed';
+              z = '0px';
+              ts = '35px';
+            } else {
+              x = 1;
+              y = 'absolute';
+              z = '26px';
+              ts = '61px';
+            }
+            $("#menu").css({'opacity': x});
+            $("#timeselect").css({'opacity': x});
+            $("#floatbtn").css({'position': y,'top': z});
+            $(".layui-laydate").css({'position': y,'top': ts})
+          	});
+      </script>
+  </body>
+
+</html>

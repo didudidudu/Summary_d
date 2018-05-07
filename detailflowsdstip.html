@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>流量详情</title>
+    <meta name="keywords" content="渠道通">
+    <meta name="description" content="渠道通">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/fonts/font-awesome.min.css" rel="stylesheet">
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <base target="_blank">
+    <script src="myjs/html5shiv.min.js"></script>
+    <script src="myjs/respond.min.js"></script>
+    <style type="text/css">
+	th,td {
+		text-align:center;
+	}
+	.overflows {
+		height:213px;
+	}
+	.tableflows {
+		overflow-y:auto;
+		height:205px;
+	}
+	.headflows {
+		height:34px;
+	}
+	</style>
+  </head>
+  
+  <body>
+    <div style="margin-top:0;padding-top:0" class="wrapper wrapper-content ">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="ibox-title">
+            <h5>源IP：</h5>
+            <label id="srcip"></label>
+            <!-- <div class="ibox-tools"><a class="collapse-link">更多></a></div>--></div>
+          <div class="ibox-content">
+            <div class="overflows">
+              <table class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                <thead>
+                  <tr>
+                    <th>目标IP</th>
+                    <th>上行流量</th>
+                    <th>总流量</th>
+                    <th>国家</th></tr>
+                </thead>
+                <tbody id="dstIp"></tbody>
+              </table>
+            </div>
+            <div style="right: 30px;position: absolute;top: 245px">
+              <ul id='page-dstip'></ul>
+            </div>
+            <!-- <div style="right: 30px;position: absolute;top: 88%"> -->
+            <!-- <button id="go" type="button" class="btn btn-xs " onclick="backward()">上一页</button> -->
+            <!-- 当前页数:<label id="curpageNum"></label>/总页数:<label id="pageNum"></label> -->
+            <!-- <button id="come" type="button" class="btn btn-xs " onclick="forward()">下一页</button> -->
+            <!-- </div> --></div>
+        </div>
+      </div>
+    </div>
+    <script src="js/jquery.min.js-v=2.1.4"></script>
+    <script src="js/bootstrap.min.js-v=3.3.5"></script>
+    <script src="js/map/echarts.min.js"></script>
+    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="js/content.min.js-v=1.0.0"></script>
+    <script src="js/page/bootstrap-paginator.js"></script>
+    <script src="myjs/date.js"></script>
+    <script src="myjs/detail/detailFlowsdstip.js"></script>
+    <script src="myjs/login.js"></script>
+    </body>
+    
+    </html > 

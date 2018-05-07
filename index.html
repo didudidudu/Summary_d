@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>天眼通</title>
+    <meta name="keywords" content="渠道通">
+    <meta name="description" content="渠道通服务">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/fonts/font-awesome.min.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <script src="myjs/html5shiv.min.js"></script>
+    <script src="myjs/respond.min.js"></script>
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden" id = "indexbody">
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <nav class="navbar-default navbar-static-side" role="navigation">
+    	<div style="position: absolute;right: 0px;float: right;height: 100%;width: 13px;z-index:99;">
+    		<div style="position: absolute;top: 50%;float: right;right: 5%;">
+    			<a class="navbar-minimalize" style="color:#CCFFFF;" href="#">
+	               <i class="fa fa-lg fa-angle-double-left" id="exchange"></i>
+	            </a>
+    		</div>
+        </div>
+        <div class="nav-close"><i class="fa fa-times-circle"></i></div>
+        <div class="sidebar-collapse" style="border-radius: 10px;">
+            <ul class="nav" id="side-menu">
+                <li class="nav-header">
+                    <div class="profile-element">
+                        	<span><img alt="image" style="width:155px;" src="img/logo.png"/>&nbsp;&nbsp;&nbsp;
+                        	</span>
+                    </div>
+                    <div class="logo-element" style="padding:20px 5px 5px 5px;">
+                    	<span><img alt="image" style="width:50px;" src="img/logo1.png"/>&nbsp;&nbsp;&nbsp;
+                        </span>
+                    </div>
+                </li>
+                <li class="nav-header" style="padding:0px 0px 20px 20px;">
+                		<span style="color: #DDDDDD;font-size: 12px;font-style:italic" class="nav-label">*数据统计周期为</span><i style="color: #DDDDDD;font-size: 13px;">24h</i>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="survey.html" title="概览">
+                        <i class="fa fa-home"></i>
+                        <span class="nav-label">概览</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="basicThread.html" title="特征威胁">
+                        <i class="fa fa-clipboard"></i>
+                        <span class="nav-label">特征威胁</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="abnormal.html" title="流量分析">
+                        <i class="fa fa-exchange"></i>
+                        <span class="nav-label">流量分析</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="protocolDetection.html" title="协议分析">
+                        <i class="fa fa-suitcase"></i>
+                        <span class="nav-label">协议分析</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="report.html" title="报表">
+                        <i class="fa fa-edit"></i>
+                        <span class="nav-label">安全周报</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" title="系统管理">
+                        <i class="fa fa-desktop"></i>
+                        <span class="nav-label">系统管理</span>
+                        <span class="fa arrow" style="position: absolute;right;right: 20%"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <!--<li><a class="J_menuItem" href="onMonitor.html">运行监控</a></li>-->
+                        <li><a class="J_menuItem" href="systemManage.html">系统参数配置</a></li>
+                        <li><a class="J_menuItem" href="sensitiveManage.html">敏感文件配置</a></li>
+                        <li><a class="J_menuItem" href="imIpManage.html">敏感IP配置</a></li>
+                        <li><a class="J_menuItem" href="userManage.html">用户管理</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--左侧导航结束-->
+    <!--右侧部分开始-->
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <!--栏目替换标签开始-->
+        <div class="row content-tabs">
+            <button class="roll-nav roll-left J_tabLeft"><i class="fa fa-backward"></i>
+            </button>
+            <nav class="page-tabs J_menuTabs">
+                <div class="page-tabs-content">
+                    <a href="javascript:;" class="active J_menuTab" data-id="survey.html">概览</a>
+                </div>
+            </nav>
+            <button class="roll-nav roll-right J_tabRight" ><i class="fa fa-forward"></i>
+            </button>
+            <div class="btn-group roll-nav roll-right" >
+                <button class="dropdown J_tabClose" data-toggle="dropdown">关闭操作<span class="caret"></span>
+                </button>
+                <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                    <li class="J_tabShowActive"><a>定位当前选项卡</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="J_tabCloseAll"><a>关闭全部选项卡</a>
+                    </li>
+                    <li class="J_tabCloseOther"><a>关闭其他选项卡</a>
+                    </li>
+                </ul>
+            </div>
+             <a class="roll-nav roll-right J_tabExit" style="cursor: pointer" href="javascript:doExit()" data-index="0" title="点击注销账户">
+             <i class="fa fa-user-circle"></i>&nbsp;&nbsp;<label id="accno"></label> -- <label id="username"></label>
+             </a>
+        </div>
+        <!--栏目替换标签结束-->
+        <div class="row J_mainContent" id="content-main">
+            <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="survey.html" frameborder="0" data-id="survey.html" seamless></iframe>
+        </div>
+    </div>
+    <!--右侧部分结束-->
+</div>
+<script src="js/jquery.min.js-v=2.1.4"></script>
+<script src="js/bootstrap.min.js-v=3.3.5"></script>
+<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+<script src="js/hplus.min.js-v=4.0.0"></script>
+<script type="text/javascript" src="js/contabs.min.js"></script>
+<script src="js/plugins/pace/pace.min.js"></script>
+<script src="myjs/login.js"></script>
+</body>
+<script type="text/javascript">
+    //带提示退出系统
+    function doExit() {
+        if (confirm("确定要退出系统吗？")) {
+            doNoTipExit();
+        }
+    }
+    //强制退出系统
+    function doNoTipExit() {
+        var date = new Date(0);
+    	$.post("/service",
+                {"action": "doexit"},
+                function (result) {
+                    document.cookie = "logonAccno=%7B%22state%22%3A%22i%3A-1%22%7D;expires="+date+";path=/ ";
+                    //document.cookie = "JSESSIONID=%7B%22state%22%3A%22i%3A-1%22%7D;expires="+date+";path=/ ";
+                    location.href = "login.html";
+                });
+    }
+    
+</script>
+</html>

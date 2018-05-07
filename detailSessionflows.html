@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查询详情</title>
+    <meta name="keywords" content="渠道通">
+    <meta name="description" content="渠道通">
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/fonts/font-awesome.min.css" rel="stylesheet">
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet"><base target="_blank">
+    <script src="myjs/html5shiv.min.js"></script>
+    <script src="myjs/respond.min.js"></script>
+    <style type="text/css">
+    	.overflows {
+            overflow-y: auto;
+            height: 210px;
+        }
+        .tableflows {
+            overflow-y: auto;
+            height: 206px;
+        }
+        .headflows {
+        	height: 34px;
+        }
+        .echarts {
+        	height: 240px;
+        }
+	    th,td{
+	            text-align:center;
+	    }
+    </style>
+</head>
+<body>
+    <div style="padding:0" class="wrapper wrapper-content">
+        <div class="row">
+        	<div class="col-sm-12"  style="display:block;padding:0 16px 0 16px " id="ipchart">
+        		<div class="ibox-title">
+<!--         		<div style="float:right;margin-top: -6px"> -->
+<!--         			<button type="button" id="inform" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" -->
+<!--                                 aria-haspopup="true" aria-expanded="false" onclick="changeToallinform()">详细信息</span> -->
+<!--                       </button> -->
+<!--                       </div> -->
+                      <div class="btn-group" style="float:right;margin-top: -6px;margin-right: 5px">
+                        <button disabled="true" type="button" id="timecontrol" onclick="intervalstr()" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >5分钟<span class="caret"></span>
+                        </button>
+                        <ul id="intervalStr" class="dropdown-menu">
+                            <li><a  target="_self">5分钟</a></li>
+                            <li><a  target="_self">15分钟</a></li>
+                            <li><a  target="_self">30分钟</a></li>
+                            <li><a  target="_self">60分钟</a></li>
+                        </ul>
+                    </div>
+                
+        		</div>   		
+                <div class="ibox-content">
+                            <div class="echarts" id="flowchart1"></div>                        
+                </div>
+	        </div>
+            <div class="col-sm-12" style="display:none;padding:0 16px 0 16px " id="iptimeinform">
+                    <div class="ibox-title">
+<!--                         <h5>详细信息</h5> -->
+	                        &nbsp;&nbsp;&nbsp;<h5>源IP:</h5><label  id="srcip"></label>
+	                        &nbsp;&nbsp;&nbsp;<h5>总数:</h5><label  id="totalip"></label>
+	                        &nbsp;&nbsp;&nbsp;<h5>时间范围:</h5>&nbsp;<label id="timestart"></label>&nbsp;--&nbsp;<label id="timeend"></label>
+	                    <div style="float:right;margin-top: -6px;margin-right: 5px">
+                        	<button type="button" id="chartinform" class="btn btn-sm dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" onclick="changeTochart()">返回</span>
+                      		</button>
+						</div>	
+                    </div> 
+                    <div class="ibox-content">
+                    	<div class="headflows">
+                        <table class="table table-stripped toggle-arrow-tiny" id="editable">
+                        	<colgroup>
+					            <col width="40%">
+					            <col width="20%">
+					            <col width="20%">
+					            <col width="20%">
+					        </colgroup>
+                            <thead id="thead1">
+                                <tr>
+                                    <th>目标IP</th>
+	                                <th>上行流量(M)</th>
+	                                <th>总数据量(M)</th>
+	                                <th>国家</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        </div>
+                        <div class="tableflows">
+                        <table class="table table-stripped toggle-arrow-tiny" id="editable">
+                        	<colgroup>
+					            <col width="40%">
+					            <col width="20%">
+					            <col width="20%">
+					            <col width="20%">
+					        </colgroup>
+                            <tbody id="iptimedetail">
+                            </tbody>
+                        </table>
+                        </div>
+                     </div>
+            </div>
+            
+            <div class="col-sm-12" style="display:none" id="ipinform">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>详细信息</h5>
+	                        &nbsp;&nbsp;&nbsp;IP/PORT:<label  id="ip"></label>  
+	                        &nbsp;&nbsp;&nbsp;主机名:<label  id="domain"></label>  
+	                        &nbsp;&nbsp;&nbsp;总数:<label  id="total1"></label>
+	                    <div style="float:right;margin-top: -6px">
+                        	<button type="button" id="chartinform" class="btn btn-sm dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" onclick="changeTochart()">流量趋势</span>
+                      		</button>
+						</div>
+                    </div>
+                    <div class="ibox-content">
+                    	<div class="headflows">
+                        <table class="table table-striped table-bordered table-hover " id="editable">
+                            <thead id="thead1">
+                                <tr>
+                                    <th>#</th>
+                                    <th>时间</th>
+                                    <th>源IP</th>
+                                    <th>源端口</th>
+                                    <th>目标IP</th>
+                                    <th>目标端口</th>
+                                    <th>总数据量</th>
+                                    <th>国家</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        </div>
+                        <div class="tableflows">
+                        <table class="table table-striped table-bordered table-hover " id="editable">
+                            <tbody id="detail">
+                            </tbody>
+	                        <tbody> 
+	                         <tr>
+	                            <td colspan="8" align="center" id="tdmore"><button onclick="getdetail()">点击加载更多</button><input type="hidden" id="total" value="0"/></td>
+	                        </tr>
+	                        </tbody>
+                        </table>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+	</div>
+    <script src="js/jquery.min.js-v=2.1.4"></script>
+    <script src="js/bootstrap.min.js-v=3.3.5"></script>
+    <script src="js/map/echarts.min.js"></script>
+    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="js/content.min.js-v=1.0.0"></script>
+	<script src="myjs/date.js"></script>
+	<script src="myjs/detail/sessionDetailflows.js"></script>
+	<script src="myjs/login.js"></script>
+	<script src="myjs/common/common.js"></script>
+</body>
+</html>

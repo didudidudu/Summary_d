@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>敏感信息监测</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/fonts/font-awesome.min.css" rel="stylesheet">
+    <link href="css/plugins/footable/footable.core.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <base target="_blank">
+    <script src="myjs/html5shiv.min.js"></script>
+    <script src="myjs/respond.min.js"></script>
+    <script src="js/login/jquery-1.10.2.min.js"></script>
+    <script src="myjs/login.js"></script>
+    <style> .table > tbody > tr > td a {
+        color: #999;
+    }</style>
+    <script>
+        $(function () {
+            $(".table-top span").click(function () {
+                $(".table-content-nav").hide();
+                $(this).parent().siblings(".table-content-nav").toggle();
+            });
+        });
+    </script>
+    <style type="text/css">
+        .overflows {
+            overflow-y: auto;
+            height: 264px;
+        }
+    </style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Top10本地访问远端端口</h5>
+                    <!-- <div class="ibox-tools"><a class="collapse-link">更多></a></div>-->
+                </div>
+                <div class="ibox-content">
+                    <div class="overflows">
+                        <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+                            <thead>
+                            <tr>
+                                <th>端口号</th>
+                                <th>数量</th>
+                            </tr>
+                            </thead>
+                            <tbody id="bysrc">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Top10远端访问本地端口</h5>
+                    <!-- <div class="ibox-tools"><a class="collapse-link">更多></a></div>-->
+                </div>
+                <div class="ibox-content">
+                    <div class="overflows">
+                        <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+                            <thead>
+                            <tr>
+                                <th>端口号</th>
+                                <th>数量</th>
+                            </tr>
+                            </thead>
+                            <tbody id="bydest">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>重要IP监控</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="overflows">
+                        <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+                            <thead>
+                            <tr>
+                                <th>感染本地IP</th>
+                                <th>感染数量</th>
+                            </tr>
+                            </thead>
+                            <tbody id="ip">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>敏感文件监控</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="overflows">
+                        <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+                            <thead>
+                            <tr>
+                                <th>敏感文件MD5值</th>
+                                <th>本地IP</th>
+                                <th>统计数量</th>
+                            </tr>
+                            </thead>
+                            <tbody id="doc">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script src="js/map/jquery.min.js-v=2.1.4"></script>
+<script src="js/map/echarts.min.js"></script>
+<script src="js/bootstrap.min.js-v=3.3.5"></script>
+<script src="js/content.min.js-v=1.0.0"></script>
+<script src="#"></script>
+</body>
+</html>

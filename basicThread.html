@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>特征威胁</title>
+    <link rel="shortcut icon" href="img/bgs/favicon.ico">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/fonts/font-awesome.min.css" rel="stylesheet">
+    <link href="css/plugins/footable/footable.core.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <script src="myjs/html5shiv.min.js"></script>
+    <script src="myjs/respond.min.js"></script>
+    <style>.table > tbody > tr > td a { color: #999; }</style>
+    <base target="_blank">
+    <script src="js/login/jquery-1.10.2.min.js"></script>
+    <script src="myjs/login.js"></script>
+    <style type="text/css">
+    .wrap {
+		width:70px;
+		white-space:nowrap;
+		text-overflow:ellipsis;
+		overflow:hidden;
+		cursor:pointer;
+	}
+	.overflows {
+		overflow-y:auto;
+		height:205px;
+	}
+	.tableflows {
+		overflow-y:auto;
+		height:171px;
+	}
+	.headflows {
+		height:34px;
+	}
+	th {
+		text-align:center;
+	}
+	td {
+		text-align:center;
+	}
+	.searchbox {
+		float:right;
+		margin-top:-3px;
+		margin-right:5px;
+		border:2px solid #AAAAAA;
+		width:175px;
+		height:25px;
+		border-radius:30px;
+	}
+	.searchinput {
+		border:none;
+		outline:medium;
+		margin-left:9px;
+	}
+	</style>
+  </head>
+  
+  <body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+      <div class="row">
+        <!--威胁占比图和趋势图-->
+        <div class="col-sm-6">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>[标题示例]</h5>
+              <div class="btn-group" style="float:right;margin-top:-6px;margin-right: 0px;">
+                <button type="button" id="timecontrol" onclick="intervalthread()" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">15分钟
+                  <span class="caret"></span></button>
+                <ul id="intervalThread" class="dropdown-menu">
+                  <li>
+                    <a target="_self">5分钟</a></li>
+                  <li>
+                    <a target="_self">15分钟</a></li>
+                  <li>
+                    <a target="_self">30分钟</a></li>
+                  <li>
+                    <a target="_self">60分钟</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="ibox-content">
+              <div class="row-in">
+                <div class="col-sm-12">
+                  <div class="echarts" id="threattrendchart"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>[标题示例]</h5>
+              <div class="btn-group" style="float:right;margin-top: -6px;margin-right:2px;">
+                <button type="button" id="countryFrom" onclick="countrystr()" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">全部国家
+                  <span class="caret"></span></button>
+                <ul class="dropdown-menu" id='countryStr'>
+                  <li>
+                    <a target="_self">****</a></li>
+                  <li>
+                    <a target="_self">**</a></li>
+                  <li>
+                    <a target="_self">**</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="ibox-content">
+              <div class="row-in">
+                <div class="col-sm-12">
+                  <div class="echarts" id="echarts-bar-threatchart"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--占比图 end--></div>
+      <!--四类攻击概况-->
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>[标题示例]</h5>
+              <!-- <div class="ibox-tools"><a class="collapse-link">更多></a></div>--></div>
+            <div class="ibox-content">
+              <div class="row-in">
+                <div class="col-sm-12">
+                  <div class="echarts" id="echarts-line-ddoschart"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>[标题示例]</h5>
+              <!-- <div class="ibox-tools"><a class="collapse-link">更多></a></div>--></div>
+            <div class="ibox-content">
+              <div class="row-in">
+                <div class="col-sm-12">
+                  <div class="echarts" id="echarts-line-sqlchart"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>[标题示例]</h5>
+              <!-- <div class="ibox-tools"><a class="collapse-link">更多></a></div>--></div>
+            <div class="ibox-content">
+              <div class="row-in">
+                <div class="col-sm-12">
+                  <div class="echarts" id="echarts-line-scanchart"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>[标题示例]</h5>&nbsp;&nbsp;总数:
+              <label id="gettotal"></label>
+              <div class="searchbox">
+                <input id="searchsrcip" name="searchsrcip" class="searchinput" type="text" size="16" value="请输入源IP地址..." onblur="getSearchip();if(this.value==''){this.value='请输入源IP地址...';}" onfocus="if(this.value =='请输入源IP地址...') {this.value=''; }" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d\.]/g,'') " />
+                <div style="float:right;margin-top:0px;margin-right: 1px;">
+                  <a onclick="getSearchip()">&nbsp;
+                    <i class="fa fa-search"></i>&nbsp;</a></div>
+              </div>
+            </div>
+            <div class="ibox-content">
+              <div class="headflows">
+                <table style="table-layout:fixed;" class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                  <colgroup>
+                    <col width="40px">
+                      <col width="20%">
+                        <col width="20%">
+                          <col width="24%">
+                            <col width="10%">
+                              <col width="10%"></colgroup>
+                  <thead>
+                    <tr>
+                      <th data-toggle="true">#</th>
+                      <th class='wrap'>**</th>
+                      <th class='wrap'>****</th>
+                      <th class='wrap'>**</th>
+                      <th class='wrap'>**</th>
+                      <th class='wrap'>**</th></tr>
+                  </thead>
+                </table>
+              </div>
+              <div class="tableflows">
+                <table style="table-layout:fixed;" class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                  <colgroup>
+                    <col width="40px">
+                      <col width="20%">
+                        <col width="20%">
+                          <col width="24%">
+                            <col width="10%">
+                              <col width="10%"></colgroup>
+                  <tbody id="trojanInformation"></tbody>
+                  <tbody>
+                    <tr>
+                      <td colspan="6" align="center" id="tdTrojan">
+                        <button onclick="getTrojan()">点击加载更多</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--四类攻击概况 end-->
+      <div class="row">
+        <!--详细信息列表-->
+        <div class="col-sm-12">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>[标题示例]</h5>&nbsp;&nbsp;总数:
+              <label id="total"></label>
+              <div style="float:right;margin-top:0px;margin-right: 15px;">
+                <a id="exportdata" title="数据导出" onclick="exportData()">
+                  <i class="fa fa-download"></i>
+                </a>
+              </div>
+              <div class="btn-group" style="float:right;margin-top:-6px;margin-right: 20px;">
+                <button onclick="threadName()" id="threadtype" type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">全部类型
+                  <span class="caret"></span></button>
+                <ul class="dropdown-menu" id="thread">
+                  <li>
+                    <a target="_self">****1</a></li>
+                  <li>
+                    <a target="_self">****2</a></li>
+                  <li>
+                    <a target="_self">****3</a></li>
+                  <li>
+                    <a target="_self">****4</a></li>
+                  <li>
+                    <a target="_self">****5</a></li>
+                  <li>
+                    <a target="_self">****6</a></li>
+                  <li>
+                    <a target="_self">****7</a></li>
+                  <li>
+                    <a target="_self">****8</a></li>
+                  <li>
+                    <a target="_self">****0</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="ibox-content">
+              <div class="headflows">
+                <table style="table-layout:fixed;" class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                  <colgroup>
+                    <col width="4%">
+                      <col width="22%">
+                        <col width="15%">
+                          <col width="7%">
+                            <col width="15%">
+                              <col width="7%">
+                                <col width="9%">
+                                  <col width="20%"></colgroup>
+                  <thead>
+                    <tr>
+                      <th class='wrap'>#</th>
+                      <th class='wrap'>**</th>
+                      <th class='wrap'>**</th>
+                      <th class='wrap'>***</th>
+                      <th class='wrap'>****</th>
+                      <th class='wrap'>****</th>
+                      <th class='wrap'>****</th>
+                      <th class='wrap'>**</th>
+                      <!--<th>协议</th>--></tr>
+                  </thead>
+                </table>
+              </div>
+              <div style="height: 210px;overflow-y: auto;">
+                <table style="table-layout:fixed;" class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                  <colgroup>
+                    <col width="4%">
+                      <col width="22%">
+                        <col width="15%">
+                          <col width="7%">
+                            <col width="15%">
+                              <col width="7%">
+                                <col width="9%">
+                                  <col width="20%"></colgroup>
+                  <tbody id="detail"></tbody>
+                  <tbody>
+                    <tr>
+                      <td colspan="8" align="center" id="tdmore">
+                        <button onclick="getdetail()">点击加载更多</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--详细信息列表 end--></div>
+      <!--Top10敏感端口号 end--></div>
+    <script src="js/map/jquery.min.js-v=2.1.4"></script>
+    <script src="js/map/echarts.min.js"></script>
+    <script src="js/bootstrap.min.js-v=3.3.5"></script>
+    <script src="js/content.min.js-v=1.0.0"></script>
+    <script src="myjs/basicThread.js"></script>
+    <script src="myjs/common/common.js"></script>
+  </body>
+
+</html>

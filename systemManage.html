@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统参数配置</title>
+    <meta name="keywords" content="渠道通">
+    <meta name="description" content="渠道通">
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/fonts/font-awesome.min.css" rel="stylesheet">
+    <!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet"><base target="_blank">
+    <script src="myjs/html5shiv.min.js"></script>
+    <script src="myjs/respond.min.js"></script>
+    <style>
+    	.new-style{
+    		-web-kit-appearance:none;
+  			-moz-appearance: none;
+  			font-size:1em;
+			height:2.5em;
+			width:2em;
+/* 			border-radius:4px; */
+			border:1px solid #c8cccf;
+			color:#6a6f77;
+			outline:0;
+			text-align: center;
+    	}
+    	.select-style{
+    		-web-kit-appearance:none;
+  			-moz-appearance: none;
+  			font-size:1em;
+			height:2.5em;
+			width:4em;
+/* 			border-radius:4px; */
+			border:1px solid #c8cccf;
+			color:#6a6f77;
+			outline:0;
+			text-align: center;
+    	}
+    </style>
+</head>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title" style="border-radius:4px 4px 4px 4px;">
+                        <h5>系统参数配置</h5>
+                        <div class="ibox-tools">
+                    	</div>
+<!--                     <div class="ibox-content"> -->
+                        <table class="table table-striped table-bordered table-hover " id="editable">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: center" width="5%">id</th>
+                                    <th style="text-align: center" width="40%">配置说明</th>
+                                    <th style="text-align: center" width="30%">标识</th>
+                                    <th style="text-align: center" width="15%">参数值</th>
+                                    <th style="text-align: center" width="10%">操作</th> 
+                                </tr>
+                            </thead>
+                            <tbody id='databody'>
+                            </tbody>
+                        </table>
+<!--                     </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div id="modal-form" class="modal fade in" aria-hidden="true" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="ibox float-e-margins">
+                                    <div>
+                                        <form method="get" class="form-horizontal">
+                                            <div class="form-group">
+                                                <input type=hidden class="form-control" id="param_id">
+                                                <label class="col-sm-2 control-label"><font color="red">*</font>配置说明</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="conf_instruction">
+                                                    <span class="help-block m-b-none"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label"><font color="red">*</font>标识</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="identify">
+                                                    <span class="help-block m-b-none"></span>
+                                                </div>
+                                            </div>
+<!--                                             正常参数设置框 -->
+                                            <div class="form-group" id="normal" style="display: block">
+                                                <label class="col-sm-2 control-label"><font color="red">*</font>参数值</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="value">
+                                                </div>
+                                            </div> 
+<!--                                             时间范围参数设置框 -->
+                                            <div class="form-group" id="timerange" style="display: block">
+                                                <label class="col-sm-2 control-label"><font color="red">*</font>时间范围</label>
+                                                <div style="float:left;margin-left: 15px">
+                                                	<select class="select-style" id="startstate">
+		                                                <option value="0">昨天</option>
+		                                                <option value="1">凌晨</option>
+		                                            </select>
+                                                </div>
+                                                <div style="float:left;margin-left: 20px">
+                                                	<input type="text" maxlength="2" class="new-style" id="start">
+                                                </div>
+                                                <div style="float:left;margin-left: 5px"><label class="control-label">时</label></div>
+                                                <div style="float:left;margin-left: 20px">
+                                                	<input type="text" maxlength="2" class="new-style" id="startmin">
+                                                </div>
+                                                <div style="float:left;margin-left: 5px"><label class="control-label">分</label></div>
+                                                <div style="float:left;margin-left: 30px;margin-right: 10px"><label class="control-label">至</label></div>
+                                                <div style="float:left;margin-left: 20px">
+                                                	<select class="select-style" id="endstate">
+		                                                <option value="0">昨天</option>
+		                                                <option value="1">凌晨</option>
+		                                            </select>
+                                                </div>
+                                                <div style="float:left;margin-left: 20px">
+                                                	<input type="text" maxlength="2" class="new-style" id="end">
+                                                </div>
+                                                <div style="float:left;margin-left: 5px"><label class="control-label">时</label></div>
+                                                <div style="float:left;margin-left: 20px">
+                                                	<input type="text" maxlength="2" class="new-style" id="endmin">
+                                                </div>
+                                                <div style="float:left;margin-left: 5px"><label class="control-label">分</label></div>
+                                            </div> 
+                                            <span class="help-block m-b-none" style="text-align: center;" id="spanvalue"></span>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="form-group">
+                                                <div class="col-sm-4 col-sm-offset-2">
+                                                    <a data-toggle="" id="Protect" class="btn btn-sm btn-primary" target="_self" href="javascript:saveSysParam();">保存</a>
+                                                    <a data-toggle=""  id="cancel"class="btn btn-sm btn-white" target="_self" href="javascript:reset();">取消</a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-backdrop fade in" style="display: none;"></div>
+    <script src="myjs/date.js"></script>
+    <script src="js/jquery.min.js-v=2.1.4"></script>
+    <script src="myjs/login.js"></script>
+    <script>
+     $(function(){
+    	 getdatas();
+     });
+    function getdatas(){
+    	$.ajax({
+			 type : "post",
+			 url:"/service",
+			 data:{'action':'getAttrLstJson'},
+		   	 dataType:'json',
+		 	 success:function(data) {
+	 				if(data == null||data.length<0){//没有参数
+	 				}else{
+	 					var restr = "";
+	 					var ff = 0;
+	 					for(var i=0;i<data.length;i++){
+	 						var obj = data[i];
+	 						ff = ff + 1;
+	 						var showvalue = obj.value;
+	 						if(obj.identify == "backups_time" || obj.identify == "spare_time"){
+	 							var arr = obj.value.split(",");
+	 							showvalue = (arr[0]==-1?"昨天":"凌晨")+arr[1]+"点"+arr[2]+"分--"+(arr[3]==-1?"昨天":"凌晨")+arr[4]+"点"+arr[5]+"分";
+	 						}
+	 						restr += "<tr class='gradeX' id='"+obj.param_id+"'>"+
+	 						         	"<td align='center'>"+ff+"</td>"+ 
+	 						         	"<td align='center'>"+obj.conf_instruction+"</td>"+ 
+	 						         	"<td align='center'>"+obj.identify+"</td>"+ 
+	 						         	"<td align='center'>"+showvalue+"</td>"+ 
+                                           "<td align='center'><nobr>"+
+                                            "<a data-toggle='' class='btn btn-sm btn-primary' target='_self' href='javascript:editRow("+obj.param_id+",&quot;"+obj.conf_instruction+"&quot;,&quot;"+obj.identify+"&quot;,&quot;"+obj.value+"&quot;);'>编辑</a>&nbsp;&nbsp;"+
+                                           // "<a data-toggle='' class='btn btn-primary' href='javascript:deleteRow("+obj.id+");'>删除</a>&nbsp;&nbsp;"+
+                                       	"</td></nobr>"+
+	 						         "</tr>"
+	 					}
+	 					$("#databody").html(restr);
+	 				}
+		 	 },
+		 	 error:function(data){
+		 	   		//alert(data.status);
+		 	 }
+		 });
+    }
+
+     function reset(){
+    	$("#conf_instruction").val("");
+    	$("#identify").val("");
+    	$("#value").val("");
+    	$("#start").val("0");
+    	$("#end").val("0");
+    	$("#startmin").val("0");
+    	$("#endmin").val("0");
+    	$("#startstate").val(0);
+    	$("#endstate").val(0);
+    	$("#spanvalue").html("");
+ 		$("#modal-form").hide(100);
+ 		$(".modal-backdrop.in").hide(100); 
+    }
+    function editRow(id,conf_instruction,identify,value){ 
+    	if(identify == "backups_time" || identify == "spare_time"){
+    		$("#timerange").show();
+    		$("#normal").hide();
+    		var arr = value.split(",");
+    		if(arr[0]==-1){
+    			$("#startstate").val(0);
+    		}else if(arr[0]==0){
+    			$("#startstate").val(1);
+    		}
+    		if(arr[3]==-1){
+    			$("#endstate").val(0);
+    		}else if(arr[3]==0){
+    			$("#endstate").val(1);
+    		}
+    		$("#start").val(arr[1]);
+    		$("#end").val(arr[4]);
+    		$("#startmin").val(arr[2]);
+    		$("#endmin").val(arr[5]);
+    	}else{
+    		$("#start").val("0");
+        	$("#end").val("0");
+        	$("#startmin").val("0");
+        	$("#endmin").val("0");
+        	$("#startstate").val(0);
+        	$("#endstate").val(0);
+    		$("#timerange").hide();
+    		$("#normal").show();
+    	}
+ 		$("#modal-form").show(100);
+ 		$(".modal-backdrop.in").show(100);
+    	$("#param_id").val(id);
+    	$("#conf_instruction").val(conf_instruction);
+    	$("#identify").val(identify);
+    	$("#identify").attr("readonly", true);
+    	$("#value").val(value);
+    }
+    function saveSysParam(){
+		$("#spanvalue").html("");
+    	var id = $("#param_id").val();
+    	var conf_instruction = $("#conf_instruction").val();
+    	var identify = $("#identify").val();
+    	var value;
+    	if(identify == "backups_time" || identify == "spare_time"){
+    		var a = $("#startstate").val() == 0 ? -1:0;
+    		var b = $("#start").val();
+    		var bmin = $("#startmin").val();
+    		var c = $("#endstate").val() == 0 ? -1:0;
+    		var d = $("#end").val();
+    		var dmin = $("#endmin").val();
+    		value = a+","+b+","+bmin+","+c+","+d+","+dmin;
+    	}else{
+    		value = $("#value").val();
+    	}
+    	if(conf_instruction!=''&&identify!=''&&value!=''&&($("#start").val())!=''&&($("#end").val())!=''&&($("#startmin").val())!=''&&($("#endmin").val())!=''){
+    		if($("#startstate").val() == $("#endstate").val()){
+    			if(parseFloat($("#end").val()) > parseFloat($("#start").val())){
+    				$.ajax({
+   	  				 type : "post",
+   	  				 url:"/service",
+   	  				 data:{'action':'saveAttr','param_id':id,'identify':identify,'value':value,'conf_instruction':conf_instruction},
+   	  			   	 dataType:'text',
+   	  			 	 success:function(data) {
+   	  			 		if(data =='true' || data == true){
+//    	  			 			alert("系统参数配置修改成功");
+   	  			 			reset();
+   	  	  			 		getdatas();
+   	  			 		}else{
+   	  			 			var warnvalue = confirm("参数修改失败，是否重新修改");
+   	  			 			if(warnvalue = true){
+   	  			 				alert("赋予新值");
+   	  			 			}else{
+   	  			 				reset();
+   	  			 			}
+   	  			 		}
+   	  			 		
+   	  			 	 },
+   	  			 	 error:function(data){
+   	  			 	   		//alert(data.status);
+   	  			 	 }
+   	  			 });
+    			}else{
+    				$("#spanvalue").html("<font color='red'>输入的时间区间不正常！</font>");
+    			}
+    		}else{
+    			$.ajax({
+     				 type : "post",
+     				 url:"/service",
+     				 data:{'action':'saveAttr','param_id':id,'identify':identify,'value':value,'conf_instruction':conf_instruction},
+     			   	 dataType:'text',
+     			 	 success:function(data) {
+     			 		if(data =='true' || data == true){
+//      			 			alert("系统参数配置修改成功");
+     			 			reset();
+     	  			 		getdatas();
+     			 		}else{
+     			 			var warnvalue = confirm("参数修改失败，是否重新修改");
+     			 			if(warnvalue = true){
+     			 				alert("赋予新值");
+     			 			}else{
+     			 				reset();
+     			 			}
+     			 		}
+     			 		
+     			 	 },
+     			 	 error:function(data){
+     			 	   		//alert(data.status);
+     			 	 }
+     			 });
+    		}
+    	}else{
+    		$("#spanvalue").html("<font color='red'>说明、标识和值均不能为空！</font>");
+    	}
+    	
+    }
+     
+    </script>
+    <!-- <script src="myjs/login.js"></script> -->
+</body>
+
+</html>

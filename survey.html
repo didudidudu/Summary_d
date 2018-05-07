@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>概况</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/fonts/font-awesome.min.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <script src="myjs/html5shiv.min.js"></script>
+    <script src="myjs/respond.min.js"></script>
+    <style>.table > tbody > tr > td a {
+        color: #999;
+    }</style>
+    <base target="_blank">
+    <style type="text/css">
+    	.wrap{  
+ 				width: 70px;   
+				white-space: nowrap;  
+				text-overflow: ellipsis;   
+				overflow: hidden;  
+				cursor: pointer;
+		}  
+        .overflows {
+            overflow-y: auto;
+            height: 205px;
+        }
+
+        .tableflows {
+            overflow-y: auto;
+            height: 170px;
+        }
+        .headflows {
+        	height: 34px;
+        }
+        th{
+            text-align:center;
+        }
+        td{
+            text-align:center;
+        }
+    </style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!--威胁数据和威胁趋势图开始-->
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5><a href="basicThread.html" target="_blank">[标题示例]</a></h5>
+                </div>
+                <div class="ibox-content">
+                	<div class="overflows" style="padding-top:60px; text-align:center;">
+	                    <h1 class="no-margins" style="font-size:4em;">
+	                        <span id="threadcount"></span>
+	                    </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>[标题示例]</h5>
+                    <div class="btn-group" style="float:right;margin-top:-6px;margin-right: 0px;">
+                        <button  type="button" id="timecontrol1" onclick="intervalthread()" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >15分钟<span class="caret"></span>
+                        </button>
+                        <ul id="intervalThread" class="dropdown-menu">
+                            <li><a  target="_self">5分钟</a></li>
+                            <li><a  target="_self">15分钟</a></li>
+                            <li><a  target="_self">30分钟</a></li>
+                            <li><a  target="_self">60分钟</a></li>
+                        </ul>
+                    </div>
+                    <!--<div class="ibox-tools"><a class="collapse-link">更多></a></div> -->
+                </div>
+                <div class="ibox-content">
+                    <div class="row-in">
+                        <div class="col-sm-12">
+                            <div class="echarts" id="threadtrendchart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--威胁数据和威胁趋势图结束-->
+    <!--趋势图开始-->
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>[标题示例]</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row-in">
+                        <div class="col-sm-12">
+                            <div class="echarts" id="protocolcount"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5><a href="abnormal.html" target="_blank">[标题示例]</a></h5>
+                    <div class="btn-group" style="float:right;margin-top:-6px;margin-right: 0px;">
+                        <button  type="button" id="timecontrol2" onclick="intervalflows()" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >15分钟<span class="caret"></span>
+                        </button>
+                        <ul id="intervalFlows" class="dropdown-menu">
+                            <li><a  target="_self">5分钟</a></li>
+                            <li><a  target="_self">15分钟</a></li>
+                            <li><a  target="_self">30分钟</a></li>
+                            <li><a  target="_self">60分钟</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row-in">
+                        <div class="col-sm-12">
+                            <div class="echarts" id="flowtrendchart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--敏感信息详情-->
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>[标题示例]</h5>
+                    <!-- <div class="ibox-tools"><a class="collapse-link">更多></a></div>-->
+                </div>
+                <div class="ibox-content">
+                    <div class="headflows">
+                        <table class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                            <colgroup>
+					            <col width="50%">
+					            <col width="50%">
+					        </colgroup>
+                            <thead>
+                            <tr>
+                                <th>示例</th>
+                                <th>示例</th>
+                            </tr>
+                            </thead>
+                         </table>
+                    </div>
+                    <div class="tableflows">
+                         <table class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                            <colgroup>
+					            <col width="50%">
+					            <col width="50%">
+					        </colgroup>
+                            <tbody id="bysrc">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>[标题示例]</h5>
+                    <!-- <div class="ibox-tools"><a class="collapse-link">更多></a></div>-->
+                </div>
+                <div class="ibox-content">
+                    <div class="headflows">
+                        <table class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                            <colgroup>
+					            <col width="50%">
+					            <col width="50%">
+					        </colgroup>
+                            <thead>
+                            <tr>
+                                <th>示例</th>
+                                <th>数量</th>
+                            </tr>
+                            </thead>
+                        </table>
+                     </div>
+                     <div class="tableflows">
+                     	<table class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                            <colgroup>
+					            <col width="50%">
+					            <col width="50%">
+					        </colgroup>
+                            <tbody id="bydest">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>[标题示例]</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="headflows">
+                        <table class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                            <colgroup>
+					            <col width="50%">
+					            <col width="50%">
+					        </colgroup>
+                            <thead>
+                            <tr>
+                                <th>示例</th>
+                                <th>数量</th>
+                            </tr>
+                            </thead>
+                         </table>
+                     </div>
+                     <div class="tableflows">
+                         <table class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                            <colgroup>
+					            <col width="50%">
+					            <col width="50%">
+					        </colgroup>
+                            <tbody id="ip">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+      	<div class="col-sm-3">
+	            <div class="ibox float-e-margins">
+	                <div class="ibox-title">
+	                    <h5>[标题示例]</h5>
+	                </div>
+	                <div class="ibox-content">
+	                    <div class="headflows">
+	                        <table style="table-layout:fixed;" class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+	                        <colgroup>
+					            <col width="70%">
+					            <col width="30%">
+					        </colgroup>
+	                            <thead>
+	                            <tr>
+	                                <th class='wrap'>示例</th>	                                
+	                                <th class='wrap'>数量</th>
+	                            </tr>
+	                            </thead>
+	                        </table>
+	                    </div>
+	                    <div class="tableflows">
+	                    	<table style="table-layout:fixed;" class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+	                    	<colgroup>
+					            <col width="70%">
+					            <col width="30%">
+					        </colgroup>
+	                            <tbody id="doc">
+	                            </tbody>
+	                        </table>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+    </div>
+    
+</div>
+<script src="js/map/jquery.min.js-v=2.1.4"></script>
+<script src="js/map/echarts.min.js"></script>
+<script src="js/map/world.js"></script>
+<script src="js/bootstrap.min.js-v=3.3.5"></script>
+<script src="js/content.min.js-v=1.0.0"></script>
+<script src="myjs/survey.js"></script>
+<script src="myjs/login.js"></script>
+<script src="myjs/common/common.js"></script>
+</body>
+</html>

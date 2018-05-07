@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>流量监测</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <script src="js/login/jquery-1.10.2.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/fonts/font-awesome.min.css" rel="stylesheet">
+    <link href="css/plugins/footable/footable.core.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <base target="_blank">
+    <script src="myjs/html5shiv.min.js"></script>
+    <script src="myjs/respond.min.js"></script>
+    <style>
+    	.wrap{  
+ 				width: 70px;   
+				white-space: nowrap;  
+				text-overflow: ellipsis;   
+				overflow: hidden;  
+				cursor: pointer;
+		}  
+     	.table > tbody > tr > td a {
+        	color: #999;
+    	}
+    	.bgc {
+    		color: rgb(100,100,400);
+    	}
+    	.bgc1 {
+           cursor: pointer;
+        }
+     	.overflows {
+            height: 244px;
+        }
+        .tableflows {
+            overflow-y: auto;
+            height: 206px;
+        }
+        .headflows {
+        	height: 34px;
+        }
+        th{
+            text-align:center;
+        }
+        td{
+            text-align:center;
+        }
+        .overauto{
+/*         	border-radius:8px; */
+        	height:310px;
+        }
+        .overpage{
+        	
+        	height:318px;
+        }
+        .echarts{
+        	height: 240px;
+        }
+        .searchbox{
+	       float:right;
+	       margin-top:-3px;
+	       margin-right: 5px;
+	       border:2px solid #AAAAAA;
+	       width:175px;
+	       height:25px; 
+	       border-radius:30px;
+        }
+        .searchinput{
+	        border:none;
+	        outline:medium;
+	        margin-left: 9px;
+        }
+        .1{
+        	width: 70px;   
+			white-space: nowrap;  
+			text-overflow: ellipsis;   
+			overflow: hidden;
+        }
+    </style>
+    <script>
+        $(function () {
+            $(".table-top span").click(function () {
+                $(".table-content-nav").hide();
+                $(this).parent().siblings(".table-content-nav").toggle();
+            });
+            var th=  $("th").filter(".1");
+          for(var i=0;i<th.length;i++){
+              $(th[i]).mousedown(function () {
+                  $(this).addClass('bgc').siblings().removeClass('bgc');
+              });
+              $(th[i]).mouseover(function () {
+                  $(this).addClass('bgc1').siblings().removeClass('bgc1');
+              });
+          }
+        });
+    </script>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!--流量趋势图开始-->
+    <div class="row">
+        <div class="col-sm-7">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>[标题示例]</h5>
+                    <div class="btn-group" style="float:right;margin-top:-6px;margin-right: 0px;">
+                        <button  type="button" id="timecontrol" onclick="intervalstr()" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >15分钟<span class="caret"></span>
+                        </button>
+                        <ul id="intervalStr" class="dropdown-menu">
+                            <li><a  target="_self">5分钟</a></li>
+                            <li><a  target="_self">15分钟</a></li>
+                            <li><a  target="_self">30分钟</a></li>
+                            <li><a  target="_self">60分钟</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row-in">
+                        <div class="col-sm-12">
+                            <div class="echarts" id="echarts-line-chart"></div>
+                        </div>                          
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <div>
+                		&nbsp;<label id="timestartend" class="wrap" style="width: 280px;"></label>
+                		<div style="float:right;margin-top:0px;margin-right: 2px;">
+                		<a onclick="getExcel(chartstarttime,chartendtime)" title="数据导出"><i class="fa fa-download"></i></a>
+	                	</div>
+                	</div>
+                </div>
+                <div class="ibox-content">
+                    <div class="headflows">
+                        <table style="table-layout:fixed;" class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                            <colgroup>
+					            <col width="40%">
+					            <col width="30%">
+					            <col width="30%">
+					        </colgroup>
+                            <thead>
+                            <tr>
+                                <th class="wrap">[标题示例]</th>
+                                <th class="wrap">[标题示例]</th>
+                                <th class="wrap">[标题示例]</th>
+                            </tr>
+                            </thead>
+                         </table>
+                   </div>
+                   <div  class="tableflows">         
+                         <table style="table-layout:fixed;" class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                         <colgroup>
+					            <col width="40%">
+					            <col width="30%">
+					            <col width="30%">
+					        </colgroup>   
+                            <tbody id="timeIpinform"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--本地IP流量等杂项-->
+	<div class="row">
+		<div class="col-sm-7">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
+					<h5>[标题示例]</h5>
+                    <div class="searchbox">
+	                    <input id="searchsrcip" name="searchsrcip" class="searchinput" type="text" size="16" value="请输入源IP地址..." onblur="getInputip();if(this.value==''){this.value='请输入源IP地址...';}" onfocus="if(this.value =='请输入源IP地址...') {this.value=''; }" 
+	                    onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d\.]/g,'') " />
+	                	<div style="float:right;margin-top:0px;margin-right: 1px;"><a onclick="getInputip()">&nbsp;<i class="fa fa-search"></i>&nbsp;</a>
+	                	</div>
+	                </div>
+				</div>
+				<div class="ibox-content">
+					<div class="overflows">
+						<table style="table-layout:fixed;" class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+	                            <thead>
+	                            <tr>
+	                                <th data-toggle="true">[标题示例]</th>
+	                                <th onclick="getBy(0)" class="1">[标题示例]</th>
+	                                <th onclick="getBy(1)" class="1">[标题示例]</th>
+	                                <th onclick="getBy(2)" class="1">[标题示例]</th>
+	                            </tr>
+	                            </thead>
+	                            <tbody id="bytopn">
+	                            </tbody>
+	                     </table>
+	                </div>
+				</div>
+			</div>
+<!-- 			<div style="right: 30px;position: absolute;top: 300px"> -->
+<!--                         	<button id="go" type="button" class="btn btn-xs " onclick="backward(0)">上一页</button> -->
+<!--                     		当前页数:<label id="curpageNum"></label>/总页数:<label id="pageNum"></label> -->
+<!--                     		<button id="come" type="button" class="btn btn-xs" onclick="forward(0)">下一页</button> -->
+<!-- 					</div> -->
+<!--已修改 -->
+					<div style="right: 30px;position: absolute;top: 245px;display:block" id="search">
+					    <ul id='page-srcip'></ul>
+					</div>	
+					
+			</div>
+		<div class="col-sm-5">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
+		            <h5>源IP：</h5>
+		            <label id="srcip"></label>
+		            <!-- <div class="ibox-tools"><a class="collapse-link">更多></a></div>--></div>
+		          <div class="ibox-content">
+		            <div class="overflows">
+		              <table class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+		                <thead>
+		                  <tr>
+		                    <th>[标题示例]</th>
+		                    <th>[标题示例]</th>
+		                    <th>[标题示例]</th>
+		                    <th>[标题示例]</th></tr>
+		                </thead>
+		                <tbody id="dstIp"></tbody>
+		              </table>
+		            </div>
+		            <div style="right: 30px;position: absolute;top: 245px;display:block" id="search-dstip">
+		              <ul id='page-dstip'></ul>
+		            </div>
+		           </div>
+<!-- 			<div class="overpage" style="margin-bottom:10px;margin-right:10px;margin-left:10px;border-radius: 8px"> -->
+<!-- 				<iframe name=dstip width=100% height=100% src="./detailflowsdstip.html" id="dstip"  frameborder="0"></iframe> -->
+<!-- 			</div> -->
+		</div>
+	</div>
+	</div>
+	<!--凌晨流量监测-->
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <div class="btn-group" style="float:left;margin-top: -6px;margin-right:2px;">
+                        <button type="button" id="weetime" onclick="weeTime()" class="btn btn-sm dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">[标题示例]<span class='caret'></span></button>
+                        <ul class="dropdown-menu" id='weetimeli'>
+                            <li><a  target="_self">[标题示例]</a></li>
+                            <li><a  target="_self">[标题示例]</a></li>
+                        </ul>
+                    </div>
+					<div style="float:right;margin-top:0px;margin-right: 2px;">
+						<a onclick="getweeExcel(weetimetype)" title="数据导出"><i class="fa fa-download"></i></a>
+	                </div>
+                </div>
+                <div class="ibox-content">
+                        <div class="row-in">
+	                        <div class="col-sm-12">
+	                  <div class="headflows">
+                        <table style="table-layout:fixed;" class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                            <colgroup>
+					            <col width="40%">
+					            <col width="30%">
+					            <col width="30%">
+					        </colgroup>
+                            <thead>
+                            <tr>
+                                <th class="wrap">[标题示例]</th>
+                                <th class="wrap">[标题示例]</th>
+                                <th class="wrap">[标题示例]</th>
+                            </tr>
+                            </thead>
+                         </table>
+<!--                          <div style="right: 30px;position: absolute;bottom: 10px"> -->
+<!--                         	<button id="go1" type="button" class="btn btn-xs " onclick="backward(1)">上一页</button> -->
+<!--                     		当前页数:<label id="curpageNum1"></label>/总页数:<label id="pageNum1"></label> -->
+<!--                     		<button id="come1" type="button" class="btn btn-xs " onclick="forward(1)">下一页</button> -->
+<!-- 						</div>	 -->
+<!--已修改 -->
+						<div style="right: 30px;position: absolute;top: 80%">
+					    	<ul id='page-flows'></ul>
+						</div>
+						
+                   </div>
+                   <div  class="tableflows">         
+                         <table style="table-layout:fixed;" class="table table-stripped toggle-arrow-tiny" data-page-size="8">
+                         <colgroup>
+					            <col width="40%">
+					            <col width="30%">
+					            <col width="30%">
+					        </colgroup>   
+                            <tbody id="srcIp1"></tbody>
+                        </table>
+                    </div>
+	              </div>       
+               </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+			 <div class="ibox float-e-margins" style="height:315px">
+                  	<iframe name=flows width='100%' height='100%' style="border-radius:4px 4px 4px 4px;-webkit-box-shadow: #cecfcf 0px -1.5px 6px;
+    						-moz-box-shadow: #cecfcf 0px -1.5px 6px;box-shadow: #cecfcf 0px -1.5px 4px;" src="./detailSessionflows.html" id="flows"  frameborder="0"></iframe>
+			 </div>
+         </div>
+    </div>
+ </div>   
+    <script src="js/map/jquery.min.js-v=2.1.4"></script>
+    <script src="js/map/echarts.min.js"></script>
+    <script src="js/bootstrap.min.js-v=3.3.5"></script>
+    <script src="js/content.min.js-v=1.0.0"></script>
+    <script src="js/page/bootstrap-paginator.js"></script>
+    <script src="myjs/abnormal.js"></script>
+    <script src="myjs/common/common.js"></script>
+    <script src="myjs/login.js"></script>
+
+</body>
+</html>

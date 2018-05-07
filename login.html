@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="login-bg">
+<head>
+    <title>天眼通</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!-- bootstrap -->
+    <link href="css/bootstrap/bootstrap.css" rel="stylesheet"/>
+    <link href="css/bootstrap/bootstrap-responsive.css" rel="stylesheet"/>
+    <link href="css/bootstrap/bootstrap-overrides.css" type="text/css" rel="stylesheet"/>
+    <!-- global styles -->
+    <link rel="stylesheet" type="text/css" href="css/layout.css"/>
+    <link rel="stylesheet" type="text/css" href="css/elements.css"/>
+    <link rel="stylesheet" type="text/css" href="css/icons.css"/>
+    <!-- libraries -->
+    <link rel="stylesheet" type="text/css" href="css/lib/font-awesome.css"/>
+    <link rel="stylesheet" href="css/animate.min.css">
+    <!-- this page specific styles -->
+    <link rel="stylesheet" href="css/compiled/signin.css" type="text/css" media="screen"/>
+    <!-- open sans font -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,800italic,400,300,600,700,800'
+          rel='stylesheet' type='text/css'/>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <style type="text/css">
+        p {
+            font-size: 23px;
+            color: #2F4050;
+            font-weight: lighter;
+        }
+        html{
+            animation: mytrans 16s infinite;
+            -moz-animation: mytrans 16s infinite;	/* Firefox */
+            -webkit-animation: mytrans 16s infinite;	/* Safari 和 Chrome */
+            -o-animation: mytrans 16s infinite;	/* Opera */
+
+        }
+        @keyframes mytrans
+        {
+/*             background-image: url("img/bgs/9.jpg"); */
+             12.5%{background-image: url("img/bgs/5.jpg");}
+             25%{background-image: url("img/bgs/6.jpg");} 
+             37.5%{background-image: url("img/bgs/7.jpg");} 
+             50%{background-image: url("img/bgs/8.jpg");} 
+             62.5%{background-image: url("img/bgs/9.jpg");} 
+             75%{background-image: url("img/bgs/10.jpg");} 
+             87.5%{background-image: url("img/bgs/11.jpg");} 
+             100%{background-image: url("img/bgs/5.jpg")} 
+        }
+        @-webkit-keyframes mytrans
+        {
+            12.5%{background-image: url("img/bgs/5.jpg");}
+            25%{background-image: url("img/bgs/6.jpg");}
+            37.5%{background-image: url("img/bgs/7.jpg");}
+            50%{background-image: url("img/bgs/8.jpg");}
+            62.5%{background-image: url("img/bgs/9.jpg");}
+            75%{background-image: url("img/bgs/10.jpg");}
+            87.5%{background-image: url("img/bgs/11.jpg");}
+            100%{background-image: url("img/bgs/5.jpg")}
+        }
+        @-moz-keyframes mytrans
+        {
+            background-image: url("img/bgs/5.jpg");
+/*             12.5%{background-image: url("img/bgs/5.jpg");} */
+/*             25%{background-image: url("img/bgs/6.jpg");} */
+/*             37.5%{background-image: url("img/bgs/7.jpg");} */
+/*             50%{background-image: url("img/bgs/8.jpg");} */
+/*             62.5%{background-image: url("img/bgs/9.jpg");} */
+/*             75%{background-image: url("img/bgs/10.jpg");} */
+/*             87.5%{background-image: url("img/bgs/11.jpg");} */
+/*             100%{background-image: url("img/bgs/5.jpg")} */
+        }
+        @-o-keyframes mytrans
+        {
+            12.5%{background-image: url("img/bgs/5.jpg");}
+            25%{background-image: url("img/bgs/6.jpg");}
+            37.5%{background-image: url("img/bgs/7.jpg");}
+            50%{background-image: url("img/bgs/8.jpg");}
+            62.5%{background-image: url("img/bgs/9.jpg");}
+            75%{background-image: url("img/bgs/10.jpg");}
+            87.5%{background-image: url("img/bgs/11.jpg");}
+            100%{background-image: url("img/bgs/5.jpg")}
+        }
+    </style>
+</head>
+
+<body class="animated fadeInDown">
+
+<div class="row-fluid login-wrapper">
+    <a href="http://www.tnissp.com/index.php?m=content&c=index&a=lists&catid=15">
+        <img class="logo" src="img/logo.png"/>
+    </a>
+
+    <div class="span4 box">
+        <div class="content-wrap">
+            <h6><p>欢迎登录</p></h6>
+            <input class="span12" type="text" placeholder="用户名" id="name"/>
+            <span class="help-block m-b-none" id="spanname" style="text-align : left"></span>
+            <input class="span12" type="password" placeholder="密码" id="pwd"/>
+            <span class="help-block m-b-none" id="spanpwd" style="text-align : left"></span>
+            <!--<a href="#" class="forgot">Forgot password?</a>-->
+            <div class="remember">
+<!--                 <input id="remember-me" type="checkbox"/> -->
+<!--                 <label for="remember-me">记住密码</label> -->
+            </div>
+            <a id="enter" class="btn-glow primary login" 
+               style="font-size:15px; color:white;font-weight:lighter">登录</a>
+
+        </div>
+    </div>
+   
+</div>
+
+<!-- scripts -->
+<script src="js/jquery-latest.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/theme.js"></script>
+<!-- pre load bg imgs -->
+<script type="text/javascript">
+<!-- Enter点击事件 -->
+document.onkeydown = function (e) {
+    var theEvent = window.event || e;
+    var code = theEvent.keyCode || theEvent.which;
+    if (code == 13) {
+        $("#enter").click();
+    }
+};
+$(document).ready(function () {
+    $("#enter").click(function () {
+        todologin();
+    });
+});
+	//var currentuser;
+    function todologin() {
+        //alert("111");
+        $("#spanname").text("");
+        $("#spanpwd").text("");
+        var name = $("#name").val();
+        var pwd = $("#pwd").val();
+        if (name == '') {
+            $("#spanname").html("<font color='red'>用户名不能为空</font>");
+        } else if (pwd == '') {
+            $("#spanpwd").html("<font color='red'>密码不能为空</font>");
+        } else {
+        	$("#enter").html("<i class='fa fa-spinner fa-spin' ></i>");
+        	//此处应用ajax将用户名密码传到后台，后台与数据库比对来判断是否可以登录
+        	setTimeout(function(){
+        		if(name == 'admin' && pwd == 'admin'){
+	        		window.location.href = 'index.html';
+	        	}else{
+	        		$("#spanpwd").html("<font color='red'>密码不正确</font>");
+	        		$("#enter").html("登录");
+	        	}
+        	},2000);
+//          $.ajax({
+//              type: "post",
+//              url: "/service",
+//              data: {'action': 'dologin', 'acc_no': name, 'password': pwd},
+//              dataType: 'json',
+//              success: function (data) {
+//                  if (data == 'accnoExist' ) {
+//                  	window.location.href = 'index.html';
+//                  }else if(data == 1 || data == '1'){
+//                  	window.location.href = 'index.html';
+//                  }else if(data == 2 || data == '2'){
+//                  	$("#enter").html("登录");
+//                      $("#spanpwd").html("<font color='red'>系统繁忙....数据库错误</font>");
+//                  }else if(data == 3 || data == '3'){
+//                  	$("#spanpwd").html("<font color='red'>账号未激活或已被冻结</font>");
+//                  	$("#enter").html("登录");
+//                  }else if(data == 4 || data == '4'){
+//                      $("#spanpwd").html("<font color='red'>密码不正确</font>");
+//                      $("#enter").html("登录");
+//                  }else if(data == 0 || data == '0'){
+//                  	$("#spanpwd").html("<font color='red'>该账号正在登录，请更换账号</font>");
+//                  	$("#enter").html("登录");
+//                  }
+//              },
+//              error: function (data) {
+//                  //alert(data.status);
+//              }
+//          });
+        }
+    };
+</script>
+<!--  <script src="myjs/login.js"></script> -->
+</body>
+</html>
